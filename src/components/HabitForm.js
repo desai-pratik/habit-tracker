@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { HabitContext } from '../context/HabitContext';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const HabitForm = () => {
   const { addHabit, updateHabit, habits } = useContext(HabitContext);
@@ -73,8 +74,10 @@ const HabitForm = () => {
     };
     if (id) {
       updateHabit(newHabit);
+      toast.success('Habit update successfully!');
     } else {
       addHabit(newHabit);
+      toast.success('Habit added successfully!');
     }
 
     setName('');

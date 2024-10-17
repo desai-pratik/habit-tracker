@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
   const { signup } = useContext(AuthContext);
@@ -38,83 +39,78 @@ const Signup = () => {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      toast.error('Invalid signup credentials!');
     } else {
       signup(username, email, password, role);
       navigate('/login');
+      toast.success('Signup in successfully!');
     }
   };
 
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-    <div className="bg-white shadow-lg rounded-md p-8 max-w-md w-full">
-      <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">Create Your Account</h2>
+      <div className="bg-white shadow-lg rounded-md p-8 max-w-md w-full">
+        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">Create Your Account</h2>
+        <div className="mb-4">
+          <input
+            className={`w-full p-3 rounded border ${errors.username ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-400`}
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          {errors.username && <p className="text-red-500 text-xs mt-2">{errors.username}</p>}
+        </div>
 
-      {/* Username Input */}
-      <div className="mb-4">
-        <input
-          className={`w-full p-3 rounded border ${errors.username ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-400`}
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        {errors.username && <p className="text-red-500 text-xs mt-2">{errors.username}</p>}
-      </div>
+        <div className="mb-4">
+          <input
+            className={`w-full p-3 rounded border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-400`}
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {errors.email && <p className="text-red-500 text-xs mt-2">{errors.email}</p>}
+        </div>
 
-      {/* Email Input */}
-      <div className="mb-4">
-        <input
-          className={`w-full p-3 rounded border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-400`}
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        {errors.email && <p className="text-red-500 text-xs mt-2">{errors.email}</p>}
-      </div>
+        <div className="mb-4">
+          <input
+            className={`w-full p-3 rounded border ${errors.password ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-400`}
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {errors.password && <p className="text-red-500 text-xs mt-2">{errors.password}</p>}
+        </div>
 
-      {/* Password Input */}
-      <div className="mb-4">
-        <input
-          className={`w-full p-3 rounded border ${errors.password ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-400`}
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {errors.password && <p className="text-red-500 text-xs mt-2">{errors.password}</p>}
-      </div>
+        <div className="mb-6">
+          <select
+            className="w-full p-3 rounded-md border border-gray-300"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
 
-      {/* Role Selector */}
-      <div className="mb-6">
-        <select
-          className="w-full p-3 rounded-md border border-gray-300"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
+        <button
+          className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-300"
+          onClick={handleSignup}
         >
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
+          Signup
+        </button>
+
+        <p className="text-center text-gray-500 mt-6">
+          Already have an account?{' '}
+          <span className="text-blue-600 cursor-pointer hover:underline" onClick={() => navigate('/login')}>
+            Login
+          </span>
+        </p>
       </div>
-
-      {/* Signup Button */}
-      <button
-        className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-300"
-        onClick={handleSignup}
-      >
-        Signup
-      </button>
-
-      {/* Already have an account */}
-      <p className="text-center text-gray-500 mt-6">
-        Already have an account?{' '}
-        <span className="text-blue-600 cursor-pointer hover:underline" onClick={() => navigate('/login')}>
-          Login
-        </span>
-      </p>
     </div>
-  </div>
   );
 };
 

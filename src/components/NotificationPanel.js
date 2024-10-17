@@ -24,7 +24,7 @@ const NotificationPanel = () => {
           <ul className="space-y-4">
             {notifications.map((habit) => (
               <li key={habit.id} className="mb-4">
-                <div className="p-6 border-l-4 border-yellow-500 bg-yellow-50 rounded-md shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div className="p-4 border-l-4 border-yellow-500 bg-yellow-50 rounded-md shadow-sm flex flex-col md:flex-row justify-between">
                   <div className="flex flex-col">
                     <p className="text-lg font-bold text-gray-900">{habit.name}</p>
                     <p className="text-gray-700">Starting on: <span className="font-medium">{habit.startDate}</span></p>

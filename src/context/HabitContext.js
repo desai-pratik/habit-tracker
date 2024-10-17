@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export const HabitContext = createContext();
 
@@ -44,6 +45,7 @@ export const HabitProvider = ({ children }) => {
     });
     setHabits(updatedHabits);
     localStorage.setItem('habits', JSON.stringify(updatedHabits));
+    toast.success('Habit marked as done!');
   };
 
 
@@ -59,6 +61,7 @@ export const HabitProvider = ({ children }) => {
     const updatedHabits = habits.filter(habit => habit.id !== habitId);
     setHabits(updatedHabits);
     localStorage.setItem('habits', JSON.stringify(updatedHabits));
+    toast.error('Habit deleted!');
   };
 
   return (
